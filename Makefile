@@ -80,12 +80,12 @@ gdb: $(OUTPUT)
 # Build and debug test file.
 .PHONY: test
 test: $(OUTPUT)
-	gdb -tui --args ./$(OUTPUT) test/test.scm build/test.cc
+	gdb -tui --args ./$(OUTPUT)
 
 # Build and run test file.
 .PHONY: run
 run: $(OUTPUT)
-	./$(OUTPUT) test/test.scm build/test.cc
+	./$(OUTPUT)
 
 # Code::Blocks targets.
 .PHONY: Debug
