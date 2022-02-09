@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+awl-sim
+
+# Build folders
+build
+html
+
+# Runtime folders
+run
