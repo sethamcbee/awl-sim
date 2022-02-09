@@ -59,7 +59,7 @@ uninstall:
 # Remove all generated output.
 .PHONY: clean
 clean:
-	-rm -rf $(OUTPUT) build/ html/ latex/
+	-rm -rf $(OUTPUT) build/ html/ latex/ run/*
 
 # Only clean generated dependencies.
 .PHONY: cleandep

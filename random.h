@@ -31,26 +31,11 @@ private:
 // per seed. State is global.
 Rand GetRand(time(NULL));
 
-class RandRange
+auto RandRange(Rand& Rng, int Min, int Max)
 {
-public:
-
-    RandRange(int S, int MinP, int MaxP) : State(S)
-    {
-        Range = MaxP - MinP + 1;
-    }
-
-    auto operator()()
-    {
-        return State() % Range + Min;
-    }
-
-private:
-
-    Rand State;
-    int Min;
-    int Range;
-};
+    auto Range = Max - Min + 1;
+    return Rng() % Range + Min;
+}
 
 auto GetRandRange(int Min, int Max)
 {
