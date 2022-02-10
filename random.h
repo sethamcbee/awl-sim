@@ -11,18 +11,11 @@ class FRand
 {
 public:
 
-    FRand(int S) : State(S) {}
+    FRand(int S);
 
-    auto operator()()
-    {
-        return State();
-    }
+    int operator()();
 
-    auto operator()(int Min, int Max)
-    {
-        auto Range = Max - Min + 1;
-        return State() % Range + Min;
-    }
+    int operator()(int Min, int Max);
 
 private:
 
@@ -32,9 +25,3 @@ private:
 // General purpose rand for when results do not need to be preserved
 // per seed. State is global.
 extern FRand GetRand;
-
-static inline auto GetRandRange(int Min, int Max)
-{
-    auto Range = Max - Min + 1;
-    return GetRand() % Range + Min;
-}
