@@ -33,7 +33,7 @@ private:
 // per seed. State is global.
 extern FRand GetRand;
 
-static auto GetRandRange(int Min, int Max)
+static inline auto GetRandRange(int Min, int Max)
 {
     auto Range = Max - Min + 1;
     return GetRand() % Range + Min;

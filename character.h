@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "date.h"
 #include "id.h"
 #include "log.h"
 #include "names.h"
@@ -20,15 +21,14 @@ public:
 
     FCharacter() {}
 
-    FCharacter(int S)
+    FCharacter(FRand& Rng)
     {
-        Generate(S);
+        Generate(Rng);
     }
 
-    void Generate(int S)
+    void Generate(FRand& Rng)
     {
         Log("\tGenerating character...");
-        FRand Rng(S);
 
         // Assign gender.
         Gender = Rng(0, 1);
@@ -45,14 +45,21 @@ public:
             Log("\t\tGender: Female");
             NameSet = &FemaleNames;
         }
+        auto NameInd = Rng(0, NameSet->size() - 1);
         auto NameIt = NameSet->begin();
-        auto NameInd = Rng(0, NameSet->size());
         std::advance(NameIt, NameInd);
         auto TmpName = *NameIt;
         Log("\t\tName: " + TmpName);
         NameSet->erase(NameIt);
         Name = Names.size();
         Names.push_back(TmpName);
+
+        // Pick age.
+        AgeYears = YoungAdultAgeYears;
+
+        // Pick birthday.
+        Birthday = RandBirthday(Rng);
+        Log("\t\tBirthday: " + BirthdayToString(Birthday));
     }
 
 private:
@@ -60,8 +67,11 @@ private:
     int Gender;
     FId Name;
     FId Home;
+    int AgeYears;
+    int Birthday;
 };
 
 extern TVector<FCharacter> Characters;
 
-FCharacter& GenerateCharacter(FRand& Rng);
+FId GenerateCharacter(FRand& Rng);
+FId GenerateSpouse(FRand& Rng, const FCharacter&);

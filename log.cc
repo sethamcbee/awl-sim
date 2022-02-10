@@ -8,4 +8,5 @@ void LogImpl(const FString& l)
 {
     static std::ofstream LogFile("run/log.txt");
     LogFile << l << std::endl;
+    LogFile.flush();
 }

@@ -6,10 +6,10 @@
 
 TVector<FCharacter> Characters;
 
-FCharacter& GenerateCharacter(FRand& Rng)
+FId GenerateCharacter(FRand& Rng)
 {
     Characters.push_back(FCharacter());
     auto& Character = Characters.back();
-    Character.Generate(Rng());
-    return Character;
+    Character.Generate(Rng);
+    return Characters.size() - 1;
 }

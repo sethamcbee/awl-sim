@@ -27,7 +27,7 @@ public:
         Log("Beginning world generation...");
         Lots.resize(LOT_COUNT);
 
-        // Fill random lots with singles.
+        // Fill random lots.
         Log("Beginning lot generation...");
         for (size_t I = LOTS_OCCUPIED; I > 0; --I)
         {
@@ -37,7 +37,7 @@ public:
             // Check if lot is occupied already.
             if (Lot.Occupants.size() == 0)
             {
-                Lot.Generate(WorldRand());
+                Lot.Generate(WorldRand);
             }
             else
             {
