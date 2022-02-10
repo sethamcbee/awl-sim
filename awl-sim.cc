@@ -8,16 +8,12 @@
 #include "random.h"
 #include "world.h"
 
-using namespace AWL;
-
 int main(int argc, char* argv[])
 {
-    // Load name list.
     LoadNames();
-    
-    // Generate world.
-    World world;
-    world.Generate();
-    
+
+    FWorld World;
+    World.Generate();
+
     return 0;
 }

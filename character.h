@@ -7,22 +7,20 @@
 #include "id.h"
 #include "log.h"
 #include "names.h"
+#include "random.h"
 #include "string.h"
 #include "vector.h"
-
-namespace AWL
-{
 
 const int GENDER_MALE = 0;
 const int GENDER_FEMALE = 1;
 
-class Character
+class FCharacter
 {
 public:
 
-    Character() {}
+    FCharacter() {}
 
-    Character(int S)
+    FCharacter(int S)
     {
         Generate(S);
     }
@@ -30,13 +28,13 @@ public:
     void Generate(int S)
     {
         Log("\tGenerating character...");
-        Rand Rng(S);
+        FRand Rng(S);
 
         // Assign gender.
-        Gender = RandRange(Rng, 0, 1);
+        Gender = Rng(0, 1);
 
         // Pick random name.
-        Set<String>* NameSet;
+        TSet<FString>* NameSet;
         if (Gender == GENDER_MALE)
         {
             Log("\t\tGender: Male");
@@ -48,7 +46,7 @@ public:
             NameSet = &FemaleNames;
         }
         auto NameIt = NameSet->begin();
-        auto NameInd = RandRange(Rng, 0, NameSet->size());
+        auto NameInd = Rng(0, NameSet->size());
         std::advance(NameIt, NameInd);
         auto TmpName = *NameIt;
         Log("\t\tName: " + TmpName);
@@ -60,9 +58,10 @@ public:
 private:
 
     int Gender;
-    Id Name;
+    FId Name;
+    FId Home;
 };
 
-Vector<Character> Characters;
+extern TVector<FCharacter> Characters;
 
-}
+FCharacter& GenerateCharacter(FRand& Rng);

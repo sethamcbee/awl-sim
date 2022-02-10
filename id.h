@@ -4,9 +4,4 @@
 
 #pragma once
 
-namespace AWL
-{
-
-using Id = int;
-
-}
+using FId = int;

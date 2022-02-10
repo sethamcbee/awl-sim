@@ -32,6 +32,9 @@
 *.app
 awl-sim
 
+# Astyle backups
+*.orig
+
 # Build folders
 build
 html

@@ -9,18 +9,15 @@
 #include "log.h"
 #include "vector.h"
 
-namespace AWL
-{
-
-class Lot
+class FLot
 {
 public:
 
     // Default initialize with no occupants.
-    Lot() {}
+    FLot() {}
 
     // Initialize with seed.
-    Lot(int S)
+    FLot(int S)
     {
         Generate(S);
     }
@@ -28,19 +25,14 @@ public:
     void Generate(int S)
     {
         Log("Generating lot...");
-        Rand Rng(S);
+        FRand Rng(S);
 
-        // Generate one character.
-        Characters.push_back(Character());
-        auto& Character = Characters.back();
-        Character.Generate(Rng());
+        auto& FCharacter = GenerateCharacter(Rng);
     }
-    
-    Vector<Id> Occupants;
+
+    TVector<FId> Occupants;
 
 private:
 };
 
-Vector<Lot> Lots;
-
-}
+extern TVector<FLot> Lots;

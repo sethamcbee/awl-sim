@@ -4,22 +4,24 @@
 
 #pragma once
 
-#include <cstdlib>
 #include <random>
 
-namespace AWL
-{
-
 // std::minstd_rand wrapper
-class Rand
+class FRand
 {
 public:
 
-    Rand(int S) : State(S) {}
+    FRand(int S) : State(S) {}
 
     auto operator()()
     {
         return State();
+    }
+
+    auto operator()(int Min, int Max)
+    {
+        auto Range = Max - Min + 1;
+        return State() % Range + Min;
     }
 
 private:
@@ -29,18 +31,10 @@ private:
 
 // General purpose rand for when results do not need to be preserved
 // per seed. State is global.
-Rand GetRand(time(NULL));
+extern FRand GetRand;
 
-auto RandRange(Rand& Rng, int Min, int Max)
-{
-    auto Range = Max - Min + 1;
-    return Rng() % Range + Min;
-}
-
-auto GetRandRange(int Min, int Max)
+static auto GetRandRange(int Min, int Max)
 {
     auto Range = Max - Min + 1;
     return GetRand() % Range + Min;
-}
-
 }

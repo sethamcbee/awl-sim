@@ -9,13 +9,8 @@
 #include "string.h"
 #include "vector.h"
 
-namespace AWL
-{
-
-extern Vector<String> Names;
-extern Set<String> MaleNames;
-extern Set<String> FemaleNames;
+extern TVector<FString> Names;
+extern TSet<FString> MaleNames;
+extern TSet<FString> FemaleNames;
 
 void LoadNames();
-    
-}

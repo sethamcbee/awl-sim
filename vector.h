@@ -6,10 +6,5 @@
 
 #include <vector>
 
-namespace AWL
-{
-
 template <class T>
-using Vector = std::vector<T>;
-
-}
+using TVector = std::vector<T>;

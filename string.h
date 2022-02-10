@@ -6,9 +6,4 @@
 
 #include <string>
 
-namespace AWL
-{
-
-using String = std::string;
-
-}
+using FString = std::string;

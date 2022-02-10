@@ -11,19 +11,16 @@
 #include "lot.h"
 #include "random.h"
 
-namespace AWL
-{
-
 const int LOT_COUNT = 30;
 const int LOTS_OCCUPIED = 10;
 
-class World
+class FWorld
 {
 public:
 
-    World() : WorldSeed(GetRand()), WorldRand(WorldSeed) {}
+    FWorld() : WorldSeed(GetRand()), WorldRand(WorldSeed) {}
 
-    World(int S) : WorldSeed(S), WorldRand(WorldSeed) {}
+    FWorld(int S) : WorldSeed(S), WorldRand(WorldSeed) {}
 
     void Generate()
     {
@@ -32,9 +29,9 @@ public:
 
         // Fill random lots with singles.
         Log("Beginning lot generation...");
-        for (size_t i = LOTS_OCCUPIED; i > 0; --i)
+        for (size_t I = LOTS_OCCUPIED; I > 0; --I)
         {
-            auto LotId = RandRange(WorldRand, 0, LOT_COUNT-1);
+            auto LotId = WorldRand(0, LOT_COUNT-1);
             auto& Lot = Lots[LotId];
 
             // Check if lot is occupied already.
@@ -46,7 +43,7 @@ public:
             {
                 // Lot occupied; pick another lot.
                 Log("Lot already occupied, picking again.");
-                ++i;
+                ++I;
             }
         }
     }
@@ -54,7 +51,5 @@ public:
 private:
 
     int WorldSeed;
-    Rand WorldRand;
+    FRand WorldRand;
 };
-
-}

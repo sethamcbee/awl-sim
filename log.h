@@ -9,14 +9,7 @@
 
 #include "string.h"
 
-namespace AWL
-{
-
-void LogImpl(const String& l)
-{
-    static std::ofstream LogFile("run/log.txt");
-    LogFile << l << std::endl;
-}
+void LogImpl(const FString& l);
 
 #ifndef NDEBUG
 #define Log(x) LogImpl((x))
@@ -25,5 +18,3 @@ void LogImpl(const String& l)
 #ifdef NDEBUG
 #define Log(x) (void)((x));
 #endif
-
-}

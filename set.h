@@ -6,10 +6,5 @@
 
 #include <set>
 
-namespace AWL
-{
-
 template <class T>
-using Set = std::set<T>;
-
-}
+using TSet = std::set<T>;
