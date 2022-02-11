@@ -18,15 +18,14 @@ void FLot::Generate(FRand& Rng)
 {
 	Log("Generating lot...");
 
-	auto LotPopulationType = Rng(0, 2);
-	if (LotPopulationType == 0)
+	if (Rng.Try(0.2))
 	{
 		// Generate single.
 		Log("Generating single person.");
 		auto CharacterId = GenerateAdult(Rng);
 		Occupants.push_back(CharacterId);
 	}
-	else if (LotPopulationType == 1)
+	else if (Rng.Try(0.4))
 	{
 		// Generate couple.
 		Log("Generating couple.");
@@ -35,7 +34,7 @@ void FLot::Generate(FRand& Rng)
 		auto CharacterId1 = GenerateSpouse(Rng, CharacterId0);
 		Occupants.push_back(CharacterId1);
 	}
-	else if (LotPopulationType == 2)
+	else
 	{
 		// Generate family.
 		Log("Generating family.");

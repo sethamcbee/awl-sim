@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 
     LoadNames();
 
-    FWorld World;
+    FWorld World(1);
     World.Generate();
 
     return 0;

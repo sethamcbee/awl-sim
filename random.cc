@@ -5,9 +5,11 @@
 #include <cassert>
 #include <cstdlib>
 
+#include "log.h"
 #include "random.h"
 
 FRand GetRand(time(NULL));
+const int RandMax = std::minstd_rand::max();
 
 FRand::FRand(int S) : State(S)
 {
@@ -22,12 +24,14 @@ int FRand::operator()()
 int FRand::operator()(int Min, int Max)
 {
 	auto Range = Max - Min + 1;
-	return State() % Range + Min;
+	auto R = State();
+	return R / (RandMax / Range + 1) + Min;
 }
 
 int FRand::Avg(int Min, int Max, int N)
 {
 	assert(N >= 0);
+	assert(N < 11);
 
 	auto& Self = *this;
 	int Sum = Self(Min, Max);
@@ -40,11 +44,12 @@ int FRand::Avg(int Min, int Max, int N)
 
 bool FRand::Try(float Chance)
 {
-	const int SCALE = 100;
+	const int SCALE = 1000000;
 	auto& Self = *this;
+	assert(SCALE < (int)State.max());
 
-	int N = Self(0, 100);
-	float F = ((float)N) / ((float)SCALE);
-	return F < Chance;
+	int ScaledChance = (int)(Chance * (float)SCALE);
+	int N = Self(0, SCALE);
+	return N < ScaledChance;
 }
 

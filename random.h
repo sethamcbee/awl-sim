@@ -6,6 +6,8 @@
 
 #include <random>
 
+extern const int RandMax;
+
 // std::minstd_rand wrapper
 class FRand
 {

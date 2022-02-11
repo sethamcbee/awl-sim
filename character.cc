@@ -19,38 +19,6 @@ FCharacter::FCharacter(FRand& Rng)
 	Generate(Rng);
 }
 
-#if 0
-void FCharacter::Generate(FRand& Rng)
-{
-	Log("\tGenerating character...");
-
-	// Assign gender.
-	Gender = Rng(0, 1);
-
-	// Pick random name.
-	if (Gender == GENDER_MALE)
-	{
-		Log("\t\tGender: Male");
-		Name = GenerateMaleName(Rng);
-	}
-	else
-	{
-		Log("\t\tGender: Female");
-		Name = GenerateFemaleName(Rng);
-	}
-	Log("\t\tName: " + Names[Name]);
-
-	// Pick age.
-	AgeTicks = YearsToTicks(AdultAgeYears);
-	auto AgeYears = TicksToYears(AgeTicks);
-	Log("\t\tAge: " + std::to_string(AgeYears) + " years");
-
-	// Pick birthday.
-	Birthday = RandBirthday(Rng);
-	Log("\t\tBirthday: " + BirthdayToString(Birthday));
-}
-#endif
-
 void FCharacter::Generate(FRand& Rng, const FCharacterParams& Params)
 {
 	Log("\tGenerating character...");
@@ -139,8 +107,7 @@ FId GenerateSpouse(FRand& Rng, FId CharacterId)
 	Params.AgeYears = SpouseAge;
 
 	// Determine whether couple is gay.
-	auto GayThreshold = 80;
-	if (Rng(0, 100) > GayThreshold)
+	if (Rng.Try(0.2))
 	{
 		Params.Gender = Character.Gender;
 	}
