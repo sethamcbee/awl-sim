@@ -2,6 +2,8 @@
  * @file character.cc
  */
 
+#include <cassert>
+
 #include "character.h"
 
 FCharacterParams DefaultCharacterParams;
@@ -89,15 +91,15 @@ void FCharacter::Generate(FRand& Rng, const FCharacterParams& Params)
 	}
 	Log("\t\tName: " + Names[Name]);
 
-	if (Params.AgeTicks.has_value())
+	if (Params.AgeYears.has_value())
 	{
-		AgeTicks = Params.AgeTicks.value();
+		AgeYears = Params.AgeYears.value();
 	}
 	else
 	{
-		AgeTicks = Rng(0, DeathAgeTicks - 1);
+		AgeYears = Rng(0, DeathAgeYears - 1);
 	}
-	Log("\t\tAge: " + AgeToString(AgeTicks));
+	Log("\t\tAge: " + AgeToString(AgeYears));
 
 	Birthday = RandBirthday(Rng);
 	Log("\t\tBirthday: " + BirthdayToString(Birthday));
@@ -109,6 +111,75 @@ FId GenerateCharacter(FRand& Rng, const FCharacterParams& Params)
 	auto& Character = Characters.back();
 	Character.Generate(Rng, Params);
 	return Characters.size() - 1;
+}
+
+FId GenerateSpouse(FRand& Rng, FId CharacterId)
+{
+	// Later we'll check compatibility.
+	const auto& Character = Characters[CharacterId];
+	auto Age = Character.AgeYears;
+
+	assert(Age >= AdultAgeYears);
+
+	auto DiffRangeYears = 6;
+	auto DiffPrecision = 3;
+	auto Min = Age - DiffRangeYears;
+	auto Max = Age + DiffRangeYears;
+	if (Max > DeathAgeYears - 1)
+	{
+		Max = DeathAgeYears - 1;
+	}
+	auto SpouseAge = Rng.Avg(Min, Max, DiffPrecision);
+	if (SpouseAge < AdultAgeYears)
+	{
+		SpouseAge = AdultAgeYears;
+	}
+
+	FCharacterParams Params;
+	Params.AgeYears = SpouseAge;
+
+	// Determine whether couple is gay.
+	auto GayThreshold = 80;
+	if (Rng(0, 100) > GayThreshold)
+	{
+		Params.Gender = Character.Gender;
+	}
+	else
+	{
+		// Straight.
+		Params.Gender = !Character.Gender;
+	}
+
+	return GenerateCharacter(Rng, Params);
+}
+
+FId GenerateAdult(FRand& Rng)
+{
+	FCharacterParams Params;
+	Params.AgeYears = RandAdultAge(Rng);
+	return GenerateCharacter(Rng, Params);
+}
+
+FId GenerateOffspring(FRand& Rng, FId Parent0Id, FId Parent1Id)
+{
+	// Get age of younger parent.
+	const auto& Parent0 = Characters[Parent0Id];
+	const auto& Parent1 = Characters[Parent1Id];
+	auto ParentAge = Parent0.AgeYears;
+	if (Parent1.AgeYears < ParentAge)
+	{
+		ParentAge = Parent1.AgeYears;
+	}
+
+	assert(ParentAge >= AdultAgeYears);
+
+	// Later, we'll inherit traits. For now, we just ensure the age
+	// of the offspring is logical.
+	auto Min = BabyAgeYears;
+	auto Max = ParentAge - AdultAgeYears;
+	FCharacterParams Params;
+	Params.AgeYears = Rng.Avg(Min, Max, 2);
+	return GenerateCharacter(Rng, Params);
 }
 
 FId GenerateMaleName(FRand& Rng)
@@ -135,33 +206,29 @@ FId GenerateFemaleName(FRand& Rng)
 	return NameId;
 }
 
-FString AgeToString(int AgeTicks)
+FString AgeToString(int AgeYears)
 {
-	int Years = TicksToYears(AgeTicks);
-	int LeftoverTicks = AgeTicks - Years * YearLengthTicks;
-	int LeftoverDays = TicksToDays(LeftoverTicks);
-	FString AgeString = std::to_string(Years) + " years and ";
-	AgeString += std::to_string(LeftoverDays) + " days ";
+	FString AgeString = std::to_string(AgeYears) + " years old ";
 
 	// Get stage in life.
 	FString Stage = "(Baby)";
-	if (AgeTicks >= ToddlerAgeTicks)
+	if (AgeYears >= ToddlerAgeYears)
 	{
 		Stage = "(Toddler)";
 	}
-	if (AgeTicks >= ChildAgeTicks)
+	if (AgeYears >= ChildAgeYears)
 	{
 		Stage = "(Child)";
 	}
-	if (AgeTicks >= TeenAgeTicks)
+	if (AgeYears >= TeenAgeYears)
 	{
 		Stage = "(Teen)";
 	}
-	if (AgeTicks >= AdultAgeTicks)
+	if (AgeYears >= AdultAgeYears)
 	{
 		Stage = "(Adult)";
 	}
-	if (AgeTicks >= SeniorAgeTicks)
+	if (AgeYears >= SeniorAgeYears)
 	{
 		Stage = "(Senior)";
 	}

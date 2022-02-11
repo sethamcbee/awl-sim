@@ -22,22 +22,29 @@ void FLot::Generate(FRand& Rng)
 	if (LotPopulationType == 0)
 	{
 		// Generate single.
-		auto CharacterId = GenerateCharacter(Rng);
+		Log("Generating single person.");
+		auto CharacterId = GenerateAdult(Rng);
 		Occupants.push_back(CharacterId);
 	}
 	else if (LotPopulationType == 1)
 	{
 		// Generate couple.
-		auto CharacterId0 = GenerateCharacter(Rng);
+		Log("Generating couple.");
+		auto CharacterId0 = GenerateAdult(Rng);
 		Occupants.push_back(CharacterId0);
-		auto CharacterId1 = GenerateCharacter(Rng);
+		auto CharacterId1 = GenerateSpouse(Rng, CharacterId0);
 		Occupants.push_back(CharacterId1);
 	}
 	else if (LotPopulationType == 2)
 	{
-		// STUB.
-		auto CharacterId = GenerateCharacter(Rng);
-		Occupants.push_back(CharacterId);
+		// Generate family.
+		Log("Generating family.");
+		auto CharacterId0 = GenerateAdult(Rng);
+		Occupants.push_back(CharacterId0);
+		auto CharacterId1 = GenerateSpouse(Rng, CharacterId0);
+		Occupants.push_back(CharacterId1);
+		auto CharacterId2 = GenerateOffspring(Rng, CharacterId0, CharacterId1);
+		Occupants.push_back(CharacterId2);
 	}
 }
 

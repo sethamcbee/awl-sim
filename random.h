@@ -17,6 +17,10 @@ public:
 
     int operator()(int Min, int Max);
 
+	// Generate number whose probability of being near the middle
+	// of the range increases as N increases.
+    int Avg(int Min, int Max, int N);
+
 private:
 
     std::minstd_rand State;
