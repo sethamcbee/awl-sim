@@ -21,6 +21,8 @@ public:
 	// of the range increases as N increases.
     int Avg(int Min, int Max, int N);
 
+    bool Try(float Chance);
+
 private:
 
     std::minstd_rand State;

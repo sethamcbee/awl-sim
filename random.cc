@@ -7,6 +7,8 @@
 
 #include "random.h"
 
+FRand GetRand(time(NULL));
+
 FRand::FRand(int S) : State(S)
 {
 	// Do nothing.
@@ -36,4 +38,13 @@ int FRand::Avg(int Min, int Max, int N)
 	return Sum / (N + 1);
 }
 
-FRand GetRand(time(NULL));
+bool FRand::Try(float Chance)
+{
+	const int SCALE = 100;
+	auto& Self = *this;
+
+	int N = Self(0, 100);
+	float F = ((float)N) / ((float)SCALE);
+	return F < Chance;
+}
+
