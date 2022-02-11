@@ -12,7 +12,7 @@
 #include "random.h"
 
 const int LOT_COUNT = 30;
-const int LOTS_OCCUPIED = 10;
+const int LOTS_OCCUPIED = 15;
 
 class FWorld
 {
@@ -24,8 +24,12 @@ public:
 
 	void Generate();
 
+	void SimulateDay();
+
 private:
 
     int WorldSeed;
     FRand WorldRand;
 };
+
+extern int AllTimePopulation;

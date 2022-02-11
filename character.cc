@@ -151,6 +151,8 @@ FId GenerateOffspring(FRand& Rng, FId Parent0Id, FId Parent1Id)
 
 FId GenerateMaleName(FRand& Rng)
 {
+	assert(MaleNames.size() != 0);
+
 	auto NameInd = Rng(0, MaleNames.size() - 1);
 	auto NameIt = MaleNames.begin();
 	std::advance(NameIt, NameInd);
@@ -163,6 +165,8 @@ FId GenerateMaleName(FRand& Rng)
 
 FId GenerateFemaleName(FRand& Rng)
 {
+	assert(FemaleNames.size() != 0);
+
 	auto NameInd = Rng(0, FemaleNames.size() - 1);
 	auto NameIt = FemaleNames.begin();
 	std::advance(NameIt, NameInd);

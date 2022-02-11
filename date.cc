@@ -15,7 +15,7 @@ int DayLengthTicks = HourLengthTicks * DayLengthHours;
 int SeasonLengthTicks = DayLengthTicks * SeasonLengthDays;
 int YearLengthTicks = SeasonLengthTicks * YearLengthSeasons;
 
-int YearLengthDays = DayLengthTicks / YearLengthTicks;
+int YearLengthDays =  YearLengthTicks / DayLengthTicks;
 
 int BabyLengthYears = 1;
 int ToddlerLengthYears = 1;

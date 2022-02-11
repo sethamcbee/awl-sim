@@ -15,8 +15,19 @@ int main(int argc, char* argv[])
 
     LoadNames();
 
-    FWorld World(1);
+    FWorld World;
     World.Generate();
+
+    for (int I = 0; I < YearLengthDays * 10; ++I)
+    {
+		World.SimulateDay();
+		if (I % YearLengthDays == 0)
+		{
+			Log("==========");
+		}
+	}
+
+	Log("All-time population: " + std::to_string(AllTimePopulation));
 
     return 0;
 }
