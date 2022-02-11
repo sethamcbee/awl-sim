@@ -19,18 +19,16 @@ int YearLengthDays = DayLengthTicks / YearLengthTicks;
 
 int BabyLengthYears = 1;
 int ToddlerLengthYears = 1;
-int ChildLengthYears = 3;
+int ChildLengthYears = 2;
 int TeenLengthYears = 2;
-int YoungAdultLengthYears = 1;
 int AdultLengthYears = 8;
-int SeniorLengthYears = 2;
+int SeniorLengthYears = 3;
 
 int BabyAgeYears = 0;
 int ToddlerAgeYears = BabyAgeYears + BabyLengthYears;
 int ChildAgeYears = ToddlerAgeYears + ToddlerLengthYears;
 int TeenAgeYears = ChildAgeYears + ChildLengthYears;
-int YoungAdultAgeYears = TeenAgeYears + TeenLengthYears;
-int AdultAgeYears = YoungAdultAgeYears + YoungAdultLengthYears;
+int AdultAgeYears = TeenAgeYears + TeenLengthYears;
 int SeniorAgeYears = AdultAgeYears + AdultLengthYears;
 int DeathAgeYears = SeniorAgeYears + SeniorLengthYears;
 
@@ -38,7 +36,6 @@ int BabyAgeTicks = BabyAgeYears * YearLengthTicks;
 int ToddlerAgeTicks = ToddlerAgeYears * YearLengthTicks;
 int ChildAgeTicks = ChildAgeYears * YearLengthTicks;
 int TeenAgeTicks = TeenAgeYears * YearLengthTicks;
-int YoungAdultAgeTicks = YoungAdultLengthYears * YearLengthTicks;
 int AdultAgeTicks = AdultAgeYears * YearLengthTicks;
 int SeniorAgeTicks = SeniorAgeYears * YearLengthTicks;
 int DeathAgeTicks = DeathAgeYears * YearLengthTicks;
@@ -123,13 +120,6 @@ int RandChildAge(FRand& Rng)
 int RandTeenAge(FRand& Rng)
 {
     int Min = TeenAgeYears;
-    int Max = YoungAdultAgeYears - 1;
-    return Rng(Min, Max);
-}
-
-int RandYoungAdultAge(FRand& Rng)
-{
-    int Min = YoungAdultAgeYears;
     int Max = AdultAgeYears - 1;
     return Rng(Min, Max);
 }

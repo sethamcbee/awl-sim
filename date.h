@@ -26,7 +26,6 @@ extern int BabyLengthYears;
 extern int ToddlerLengthYears;
 extern int ChildLengthYears;
 extern int TeenLengthYears;
-extern int YoungAdultLengthYears;
 extern int AdultLengthYears;
 extern int SeniorLengthYears;
 
@@ -34,10 +33,17 @@ extern int BabyAgeYears;
 extern int ToddlerAgeYears;
 extern int ChildAgeYears;
 extern int TeenAgeYears;
-extern int YoungAdultAgeYears;
 extern int AdultAgeYears;
 extern int SeniorAgeYears;
 extern int DeathAgeYears;
+
+extern int BabyAgeTicks;
+extern int ToddlerAgeTicks;
+extern int ChildAgeTicks;
+extern int TeenAgeTicks;
+extern int AdultAgeTicks;
+extern int SeniorAgeTicks;
+extern int DeathAgeTicks;
 
 // Time and date conversions.
 int TicksToMinutes(int Ticks);
@@ -59,7 +65,6 @@ int RandBabyAge(FRand& Rng);
 int RandToddlerAge(FRand& Rng);
 int RandChildAge(FRand& Rng);
 int RandTeenAge(FRand& Rng);
-int RandYoungAdultAge(FRand& Rng);
 int RandAdultAge(FRand& Rng);
 int RandSeniorAge(FRand& Rng);
 
